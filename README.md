@@ -12,7 +12,7 @@ The ```main.cpp``` sketch located in the ```/src``` directory of this repository
 
 When valid data is received, the program proceeds to calculate multiple atmospheric parameters based on the raw sensor input. Before transmitting the results to the serial monitor, the program calls a function that blinks the onboard LED three times, visually signaling that the data was successfully retrieved from the DHT11 module. The calculated values are then output in comma-separated format at two-second intervals, providing a continuous stream of real-time environmental data.
 
-### Example Output
+### Example Serial Output
 
 ```bash
 27.00,43.00,27.02,15.60,11.04,0.21102,0.27,15.29,35.57,18.54,29.94,1124.19
@@ -27,9 +27,9 @@ Each row represents a full sensor readout and computed atmospheric metrics, outp
 | **Sensor read failure / invalid**    | nan       | nan    | nan                         | nan                             | nan                                                                 | nan                         | nan                                        | nan                                                         | nan                                                           | nan                                                                                              | nan                                     | nan                                         |
 | **Formulas used**                    | T         | RH     | heatIndex = dht.computeHeatIndex(T, RH, false) | dewPoint = T - ((100 - RH) / 5.0) | absHumidity = 216.7 × (RH/100 × 6.112 × e^(17.62×T / (243.12+T)) / (273.15+T)) | specificHumidity = 0.622 × (RH/100) / (1 + 0.622 × (RH/100)) | mixingRatio = 622 × (RH/100) / (1000 - RH/100) | vaporPressure = RH/100 × 6.112 × e^(17.62×T / (243.12+T)) | satVaporPressure = 6.112 × e^(17.62×T / (243.12+T)) | wetBulb = complex empirical formula (see source code for full expression) | humidex = T + 0.5555 × (vaporPressure - 10.0) | enthalpy = 1.006×T + (2501 + 1.86×T) × RH/100 |
 
--- 
+##
 
-To process the data output from the Arduino Uno CH340G board into a visual format, the dht11_viewer.py script has been developed. This script functions as a real-time terminal interface that visualizes serial data from the board. It enhances readability using the colorama library for ANSI color formatting, and establishes communication via USB using the pyserial library.
+To process the data output from the Arduino Uno CH340G board into a visual format, the ```dht11_viewer.py``` script has been developed. This script functions as a real-time terminal interface that visualizes serial data from the board. It enhances readability using the colorama library for ANSI color formatting, and establishes communication via USB using the pyserial library.
 
 To install the required libraries, use the following commands:
 
@@ -40,8 +40,49 @@ pip install pyserial  # For USB serial communication
 
 Upon execution, the script imports all necessary dependencies and initializes terminal color settings. It then scans and lists available serial ports, verifying that the user-specified port (```e.g., /dev/tty.usbserial-1410```) is available. If the target port is not detected, the script exits gracefully with a descriptive error message.
 
+
+<p align="center">
+  <img src="assets/img 4 - Setup + tty.usbserial-1410.jpeg" width="80%">
+</p>
+
 Once connected, the script enters its main loop, continuously reading lines of data from the serial port. Each line is decoded and parsed into **12 expected floating-point values**, corresponding to: temperature, humidity, heat index, dew point, absolute humidity, specific humidity, mixing ratio, vapor pressure, saturation vapor pressure, wet bulb temperature, humidex, and enthalpy.
 
 If a read or parse operation fails—due to invalid input or disconnection—the error is logged and displayed in red for clear visibility. Additionally, the script handles keyboard interrupts (```Ctrl+C```) to terminate the session safely and display a goodbye message along with the total uptime.
 
-Example Output:
+### Example Python Script Output:
+
+```bash
+╔══════════════════════════════════════════════════════╗
+║         Arduino Weather Station Live Feed            ║
+║   Latest update at 2025-05-12 00:34:37               ║
+║   Uptime: 00:00:07
+╔══════════════════════════════════════════════════════╗
+║ Temp (°C):                25.70  (approx ±2.00)
+║ Humidity (%):             48.00  (approx ±5.00)
+║ Heat Index (°C):          25.58
+║ Humidex:                  28.93
+║ Dew Point (°C):           15.30
+║ Wet Bulb Temp (°C):       18.28
+║ Enthalpy (kJ/kg):       1249.28
+║                                                    
+║ Abs Humidity (g/m³):      11.47
+║ Specific Humidity:      0.22992
+║ Mixing Ratio (g/kg):       0.30
+║                                                    
+║ Vapor Pressure (hPa):     15.81
+║ Sat Vapor Press.:         32.94
+╚══════════════════════════════════════════════════════╝
+║                                                    
+║   Log & Status:
+║ [00:34:34] Waiting for data |                     
+║ [00:34:35] Data received, parsing...              
+║ [00:34:35] Measurement received and displayed.    
+║ [00:34:36] Waiting for data /                     
+║ [00:34:37] Waiting for data -                     
+║ [00:34:37] Data received, parsing...              
+║                                                    
+╔══════════════════════════════════════════════════════╗
+║  Press Ctrl+C at any time to exit the program.       ║
+╚══════════════════════════════════════════════════════╝
+Waiting for data \
+```
