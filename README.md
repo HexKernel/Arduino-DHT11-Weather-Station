@@ -4,7 +4,7 @@ This project utilizes an **Arduino Uno CH340G development board** paired with a 
 
 <p align="center">
   <img src="assets/img 1 - Arduino Uno CH340G.jpeg" width="28%">
-  <img src="assets/img 2 - DHT11 Module.jpeg" width="18%">
+  <img src="assets/img 2 - DHT11 Module.jpeg" width="17.79%">
   <img src="assets/img 3 - Setup.jpeg" width="40%">
 </p>
 
