@@ -9,7 +9,6 @@ When valid data is received, the program proceeds to calculate multiple atmosphe
 
 ### Example Output
 
-Serial output:
 ```bash
 27.00,43.00,27.02,15.60,11.04,0.21102,0.27,15.29,35.57,18.54,29.94,1124.19
 nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan,nan
