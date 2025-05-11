@@ -2,6 +2,11 @@
 
 This project utilizes an **Arduino Uno CH340G development board** paired with a **DHT11** temperature and humidity sensor to create a compact yet capable environmental monitoring system. It measures **ambient temperature (°C)** and **relative humidity (%)**, and based on these, calculates a comprehensive set of derived atmospheric metrics including: Heat Index, Dew Point, Absolute Humidity, Specific Humidity, Mixing Ratio, Vapor Pressure, Saturation Vapor Pressure, Wet Bulb Temperature, Humidex, and Enthalpy.
 
+<p align="center">
+  <img src="assets/img 1 - Arduino Uno CH340G.jpeg" width="28%">
+  <img src="assets/img 2 - DHT11 Module.jpeg" width="18%">
+  <img src="assets/img 3 - Setup.jpeg" width="40%">
+</p>
 
 The ```main.cpp``` sketch located in the ```/src``` directory of this repository consists of a C++ program that begins by importing the ```DHT.h``` library, as included in the ```platformio.ini``` config. After defining the sensor type and the corresponding data pin, the sketch initializes serial communication at a **9600 baud rate**. A short delay follows to allow the DHT11 sensor to stabilize before data collection begins. Within the ```loop()``` function, the program attempts to read temperature and humidity values from the sensor. If either value is **invalid (NaN)**, the system prints a row of **"nan"** values and waits one second before retrying. 
 
@@ -22,8 +27,4 @@ Each row represents a full sensor readout and computed atmospheric metrics, outp
 | **Sensor read failure / invalid**    | nan       | nan    | nan                         | nan                             | nan                                                                 | nan                         | nan                                        | nan                                                         | nan                                                           | nan                                                                                              | nan                                     | nan                                         |
 | **Formulas used**                    | T         | RH     | heatIndex = dht.computeHeatIndex(T, RH, false) | dewPoint = T - ((100 - RH) / 5.0) | absHumidity = 216.7 × (RH/100 × 6.112 × e^(17.62×T / (243.12+T)) / (273.15+T)) | specificHumidity = 0.622 × (RH/100) / (1 + 0.622 × (RH/100)) | mixingRatio = 622 × (RH/100) / (1000 - RH/100) | vaporPressure = RH/100 × 6.112 × e^(17.62×T / (243.12+T)) | satVaporPressure = 6.112 × e^(17.62×T / (243.12+T)) | wetBulb = complex empirical formula (see source code for full expression) | humidex = T + 0.5555 × (vaporPressure - 10.0) | enthalpy = 1.006×T + (2501 + 1.86×T) × RH/100 |
 
-<p align="center">
-  <img src="assets/screenshot 1 - Arduino Uno CH340G.jpeg" width="28%">
-  <img src="assets/screenshot 2 - DHT11 Module.jpeg" width="18%">
-  <img src="assets/screenshot 3 - Setup.jpeg" width="40%">
-</p>
+
