@@ -27,4 +27,21 @@ Each row represents a full sensor readout and computed atmospheric metrics, outp
 | **Sensor read failure / invalid**    | nan       | nan    | nan                         | nan                             | nan                                                                 | nan                         | nan                                        | nan                                                         | nan                                                           | nan                                                                                              | nan                                     | nan                                         |
 | **Formulas used**                    | T         | RH     | heatIndex = dht.computeHeatIndex(T, RH, false) | dewPoint = T - ((100 - RH) / 5.0) | absHumidity = 216.7 × (RH/100 × 6.112 × e^(17.62×T / (243.12+T)) / (273.15+T)) | specificHumidity = 0.622 × (RH/100) / (1 + 0.622 × (RH/100)) | mixingRatio = 622 × (RH/100) / (1000 - RH/100) | vaporPressure = RH/100 × 6.112 × e^(17.62×T / (243.12+T)) | satVaporPressure = 6.112 × e^(17.62×T / (243.12+T)) | wetBulb = complex empirical formula (see source code for full expression) | humidex = T + 0.5555 × (vaporPressure - 10.0) | enthalpy = 1.006×T + (2501 + 1.86×T) × RH/100 |
 
+-- 
 
+To process the data output from the Arduino Uno CH340G board into a visual format, the dht11_viewer.py script has been developed. This script functions as a real-time terminal interface that visualizes serial data from the board. It enhances readability using the colorama library for ANSI color formatting, and establishes communication via USB using the pyserial library.
+
+To install the required libraries, use the following commands:
+
+```bash
+pip install colorama  # For ANSI color formatting
+pip install pyserial  # For USB serial communication
+```
+
+Upon execution, the script imports all necessary dependencies and initializes terminal color settings. It then scans and lists available serial ports, verifying that the user-specified port (```e.g., /dev/tty.usbserial-1410```) is available. If the target port is not detected, the script exits gracefully with a descriptive error message.
+
+Once connected, the script enters its main loop, continuously reading lines of data from the serial port. Each line is decoded and parsed into **12 expected floating-point values**, corresponding to: temperature, humidity, heat index, dew point, absolute humidity, specific humidity, mixing ratio, vapor pressure, saturation vapor pressure, wet bulb temperature, humidex, and enthalpy.
+
+If a read or parse operation fails—due to invalid input or disconnection—the error is logged and displayed in red for clear visibility. Additionally, the script handles keyboard interrupts (```Ctrl+C```) to terminate the session safely and display a goodbye message along with the total uptime.
+
+Example Output:
