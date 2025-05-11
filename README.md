@@ -38,7 +38,7 @@ pip install colorama  # For ANSI color formatting
 pip install pyserial  # For USB serial communication
 ```
 
-Upon execution, the script imports all necessary dependencies and initializes terminal color settings. It then scans and lists available serial ports, verifying that the user-specified port (```e.g., /dev/tty.usbserial-1410```) is available. If the target port is not detected, the script exits gracefully with a descriptive error message.
+Upon execution via the command ```python3 dht11_viewer.py```, the script imports all necessary dependencies and initializes terminal color settings. It then scans and lists available serial ports, verifying that the user-specified port (```e.g., /dev/tty.usbserial-1410```) is available. If the target port is not detected, the script exits gracefully with a descriptive error message.
 
 
 <p align="center">
