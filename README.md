@@ -94,3 +94,57 @@ Waiting for data \
 
 #### Method 2 - Using the onboard serial display:
 
+This version of the project runs entirely on the Arduino Uno board and outputs a live, human-readable weather dashboard directly to the Serial Monitor—no external Python script required.
+
+Features
+
+- Live Table Output: The Arduino prints a formatted weather dashboard to the Serial Monitor every 10 seconds, including all key environmental metrics.
+- Rolling Log Section: A log/status area at the bottom of each update shows the latest actions (sensor read, calculations, serial output, etc.), with a clear "WAIT FOR 10 SECONDS FOR SCREEN TO REFRESH" message between updates.
+- Uptime Display: Each update includes the system uptime since power-on.
+- Onboard LED Feedback: The onboard LED blinks between updates to indicate activity.
+- No Dependencies: All formatting and logic are handled on the Arduino—just open the Serial Monitor at 9600 baud to view.
+
+How It Works
+
+- Connect your DHT11 sensor to pin 2 of the Arduino Uno.
+- Upload the provided sketch to your Arduino.
+- Open the Serial Monitor (set to 9600 baud).
+- The Arduino will display a live weather dashboard, updating every 10 seconds, with a log section and uptime.
+
+Example Serial Monitor Output
+
+```bash
++----------------------------------------------------+
+|         Arduino Weather Station Live Feed          |
+|         Uptime: 00:00:37                           |
++----------------------------------------------------+
+  Temp (C):           25.70  (approx +/-2.00)
+  Humidity (%):       48.00  (approx +/-5.00)
+  Heat Index (C):     25.58
+  Humidex:            28.93
+  Dew Point (C):      15.30
+  Wet Bulb Temp (C):  18.28
+  Enthalpy (kJ/kg):   1249.28
+
+  Abs Humidity (g/m3):11.47
+  Specific Humidity:  0.22992
+  Mixing Ratio (g/kg):0.30
+
+  Vapor Pressure (hPa):15.81
+  Sat Vapor Press.:   32.94
++----------------------------------------------------+
+Log & Status:
+  [00:00:37] Measurement received from DHT11.
+  [00:00:37] Calculations for metrics done.
+  [00:00:37] Parsing data to serial output.
+  [00:00:37] Successful display to serial monitor.
+  === WAIT FOR 10 SECONDS FOR SCREEN TO REFRESH ===
+
++----------------------------------------------------+
+| HexKernel | GitHub Repository                      |
+| github.com/HexKernel/Arduino-DHT11-Weather-Station |
++----------------------------------------------------+
+```
+
+No additional software or libraries are needed on your computer—just use the Arduino Serial Monitor or any serial terminal.
+
