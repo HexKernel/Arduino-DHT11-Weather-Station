@@ -34,7 +34,7 @@ Each row represents a full sensor readout and computed atmospheric metrics, outp
 </p>
 
 
-#### Method 1 - Using the dht11_viewer.py Python script:
+## Method 1 - Using The dht11_viewer.py Python Script:
 
 To process the data output from the Arduino Uno CH340G board into a visual format, the ```dht11_viewer.py``` script has been developed. This script functions as a real-time terminal interface that visualizes serial data from the board. It enhances readability using the colorama library for ANSI color formatting, and establishes communication via USB using the pyserial library.
 
@@ -46,9 +46,6 @@ pip install pyserial  # For USB serial communication
 ```
 
 Upon execution via the command ```python3 dht11_viewer.py```, the script imports all necessary dependencies and initializes terminal color settings. It then scans and lists available serial ports, verifying that the user-specified port (```e.g., /dev/tty.usbserial-1410```) is available. If the target port is not detected, the script exits gracefully with a descriptive error message.
-
-
-
 
 Once connected, the script enters its main loop, continuously reading lines of data from the serial port. Each line is decoded and parsed into **12 expected floating-point values**, corresponding to: temperature, humidity, heat index, dew point, absolute humidity, specific humidity, mixing ratio, vapor pressure, saturation vapor pressure, wet bulb temperature, humidex, and enthalpy.
 
@@ -92,27 +89,13 @@ If a read or parse operation fails—due to invalid input or disconnection—the
 Waiting for data \
 ```
 
-#### Method 2 - Using the onboard serial display:
+## Method 2 - Using The Onboard Serial Display:
 
-This version of the project runs entirely on the Arduino Uno board and outputs a live, human-readable weather dashboard directly to the Serial Monitor—no external Python script required.
+This method runs entirely on the Arduino Uno, requiring no external Python scripts. It outputs a real-time, human-readable weather dashboard directly to the Serial Monitor at 9600 baud. Every 10 seconds, the Arduino reads data from the DHT11 sensor connected to pin 2 and displays a live environmental summary, including temperature, humidity, system uptime, and over ten calculated metrics—all formatted as a structured table.
 
-Features
+Additional features include a rolling log section that shows recent activity (sensor reads, calculations, and output status), a blinking onboard LED to indicate update cycles, and a clear on-screen message prompting users to wait 10 seconds for the next refresh. The entire interface is self-contained within the Arduino sketch, with no libraries or dependencies beyond the DHT11 sensor itself—just upload the code, connect the sensor, and open the Serial Monitor to begin.
 
-- Live Table Output: The Arduino prints a formatted weather dashboard to the Serial Monitor every 10 seconds, including all key environmental metrics.
-- Rolling Log Section: A log/status area at the bottom of each update shows the latest actions (sensor read, calculations, serial output, etc.), with a clear "WAIT FOR 10 SECONDS FOR SCREEN TO REFRESH" message between updates.
-- Uptime Display: Each update includes the system uptime since power-on.
-- Onboard LED Feedback: The onboard LED blinks between updates to indicate activity.
-- No Dependencies: All formatting and logic are handled on the Arduino—just open the Serial Monitor at 9600 baud to view.
-
-How It Works
-
-- Connect your DHT11 sensor to pin 2 of the Arduino Uno.
-- Upload the provided sketch to your Arduino.
-- Open the Serial Monitor (set to 9600 baud).
-- The Arduino will display a live weather dashboard, updating every 10 seconds, with a log section and uptime.
-
-Example Serial Monitor Output
-
+### Example Onboard Serial Monitor:
 ```bash
 +----------------------------------------------------+
 |         Arduino Weather Station Live Feed          |
@@ -145,6 +128,5 @@ Log & Status:
 | github.com/HexKernel/Arduino-DHT11-Weather-Station |
 +----------------------------------------------------+
 ```
-
 No additional software or libraries are needed on your computer—just use the Arduino Serial Monitor or any serial terminal.
 
