@@ -27,12 +27,13 @@ Each row represents a full sensor readout and computed atmospheric metrics, outp
 | **Sensor read failure / invalid**    | nan       | nan    | nan                         | nan                             | nan                                                                 | nan                         | nan                                        | nan                                                         | nan                                                           | nan                                                                                              | nan                                     | nan                                         |
 | **Formulas used**                    | T         | RH     | heatIndex = dht.computeHeatIndex(T, RH, false) | dewPoint = T - ((100 - RH) / 5.0) | absHumidity = 216.7 × (RH/100 × 6.112 × e^(17.62×T / (243.12+T)) / (273.15+T)) | specificHumidity = 0.622 × (RH/100) / (1 + 0.622 × (RH/100)) | mixingRatio = 622 × (RH/100) / (1000 - RH/100) | vaporPressure = RH/100 × 6.112 × e^(17.62×T / (243.12+T)) | satVaporPressure = 6.112 × e^(17.62×T / (243.12+T)) | wetBulb = complex empirical formula (see source code for full expression) | humidex = T + 0.5555 × (vaporPressure - 10.0) | enthalpy = 1.006×T + (2501 + 1.86×T) × RH/100 |
 
-## Output Monitoring
+## Setup Explained 
 
 <p align="center">
   <img src="assets/img 4 - Setup + tty.usbserial-1410.jpeg" width="80%">
 </p>
 
+This setup features an Arduino Uno CH340G clone connected to a DHT11 temperature and humidity sensor and a USB-to-Serial adapter (CP2102 module). The DHT11 sensor is connected to digital pin 2 for data, with power (VCC) and ground also wired to the Arduino. The USB-to-Serial adapter is connected with its TX and RX lines wired to the Arduino's RX and TX, respectively (crossed), and GND shared between both devices. The system is powered via USB, and the onboard LED confirms activity.
 
 ## Method 1 - Using The dht11_viewer.py Python Script:
 
