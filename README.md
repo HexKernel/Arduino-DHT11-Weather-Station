@@ -1,5 +1,4 @@
 
-
 # Arduino DHT11 Weather Station - Live Serial Monitor with Logging and Metrics
 
 This project utilizes an **Arduino Uno CH340G development board** paired with a **DHT11** temperature and humidity sensor to create a compact yet capable environmental monitoring system. It measures **ambient temperature (°C)** and **relative humidity (%)**, and based on these, calculates a comprehensive set of derived atmospheric metrics including: Heat Index, Dew Point, Absolute Humidity, Specific Humidity, Mixing Ratio, Vapor Pressure, Saturation Vapor Pressure, Wet Bulb Temperature, Humidex, and Enthalpy.
